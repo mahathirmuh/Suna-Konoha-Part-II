@@ -11,10 +11,9 @@
     <div class="box-body">
       @include('admin.potensi.form')
     </div>
-    <!-- /.box-body -->
 
     <div class="box-footer">
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary pull-right" style="margin-right: 90px;">Submit</button>
     </div>
   {!! Form::close() !!}
 </div>
