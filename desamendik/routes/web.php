@@ -23,4 +23,10 @@ Route::get('/struktur-organisasi', 'PengunjungController@struktur');
 
 //Route for Admin
 
+Route::get('/admin', function(){
+  return view('admin.home');
+});
+
+//Potensi Route
 Route::get('admin/potensi', 'PotentialController@index');
+Route::get('admin/potensi/tambah', 'PotentialController@create');

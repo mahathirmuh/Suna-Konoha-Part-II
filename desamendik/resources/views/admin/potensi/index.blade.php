@@ -40,7 +40,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="5"> <a href="" class="btn btn-primary btn-md pull-right"><i class="fa fa-plus"></i> Tambah Artikel</a> </td>
+            <td colspan="5"> <a href="{{url('admin/potensi/tambah')}}" class="btn btn-primary btn-md pull-right"><i class="fa fa-plus"></i> Tambah Artikel</a> </td>
           </tr>
         </tfoot>
       </table>

@@ -55,7 +55,7 @@
         <footer>
           <div class="copyright">
             <b>
-              © 2018 Copyright: <a href="http://www.unmul.ac.id/"> KKN 44 UNMUL</a>
+              © 2018 Copyright: <a href="https://www.instagram.com/kkn44_desamendik/"> KKN 44 UNMUL Desa Mendik</a>
               Design/Code by <a href="https://www.facebook.com/widyatamathebluedemon">TamaGotchii</a>
             </b>
           </div>
