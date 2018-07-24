@@ -14,7 +14,8 @@ class PotentialController extends Controller
      */
     public function index()
     {
-        return view('admin.potensi.index');
+        $potential = Potential::all();
+        return view('admin.potensi.index', compact('potential'));
     }
 
     /**

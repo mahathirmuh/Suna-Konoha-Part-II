@@ -20,17 +20,23 @@
         </tr>
         </thead>
         <tbody>
+          @foreach($potential as $Potential)
           <tr>
-            <td class="text-center">1</td>
-            <td>Potensi Karet Desa Mendik</td>
-            <td>Desa Mendik Memiliki Karet.....</td>
-            <td>Gambar Karet</td>
+            <?php
+              $x=1;
+            ?>
+            <td class="text-center"><?php echo $x; ?></td>
+            <td>{{$Potential->title}}</td>
+            <td>{{$Potential->description}}</td>
+            <td>{{$Potential->thumbnail}}</td>
             <td class="text-center">
               <a href="#" class="btn btn-success btn-xs"> <i class="fa fa-eye"></i> </a>
               <a href="" class="btn btn-warning btn-xs"> <i class="fa fa-pencil"></i> </a>
               <a href="#" class="btn btn-danger btn-xs"> <i class="fa fa-trash"></i> </a>
             </td>
+            <?php $x++; ?>
           </tr>
+          @endforeach
         </tbody>
         <tfoot>
           <tr>
