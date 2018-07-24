@@ -15,11 +15,14 @@
 //     return view('');
 // });
 
-Route::get('/admin/home', function(){
-  return view('admin.admin');
-});
 
 //Route for visitor to navigate
 Route::get('/', 'PengunjungController@index');
 Route::get('/kegiatan-desa', 'PengunjungController@kegiatan');
 Route::get('/struktur-organisasi', 'PengunjungController@struktur');
+
+//Route for Admin
+
+Route::get('/admin', function(){
+  return view('admin.master');
+});
