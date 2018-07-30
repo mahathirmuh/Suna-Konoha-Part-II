@@ -36,7 +36,13 @@ class PotentialController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $potensi = new Potential;
+        $potensi->title = "test";
+        $potensi->description = "test";
+        $potensi->thumbnail = "test";
+        $potensi->save();
+
+        return redirect('admin/potensi');
     }
 
     /**

@@ -23,6 +23,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="{{asset('admincss/dist/css/skins/skin-blue.min.css')}}">
   <link rel="icon" href="{{asset('img/favicon-16x16.png')}}">
+  @yield('head')
 
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -206,5 +207,6 @@ desired effect
     })
   })
 </script>
+@yield('js')
 </body>
 </html>

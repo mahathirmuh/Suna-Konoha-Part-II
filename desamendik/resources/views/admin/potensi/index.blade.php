@@ -20,11 +20,12 @@
         </tr>
         </thead>
         <tbody>
+          <tr class="odd"><td valign="top" colspan="5" class="dataTables_empty" style="text-align: center;">Belum ada data yang tersedia, Silahkan Masukkan Data!</td></tr>
+          <?php
+            $x=1;
+          ?>
           @foreach($potential as $Potential)
           <tr>
-            <?php
-              $x=1;
-            ?>
             <td class="text-center"><?php echo $x; ?></td>
             <td>{{$Potential->title}}</td>
             <td>{{$Potential->description}}</td>
@@ -40,7 +41,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="5"> <a href="{{url('admin/potensi/tambah')}}" class="btn btn-primary btn-md pull-right"><i class="fa fa-plus"></i> Tambah Artikel</a> </td>
+            <td colspan="5"> <a href="{{url('admin/potensi-tambah')}}" class="btn btn-primary btn-md pull-right"><i class="fa fa-plus"></i> Tambah Artikel</a> </td>
           </tr>
         </tfoot>
       </table>

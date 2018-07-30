@@ -29,4 +29,5 @@ Route::get('/admin', function(){
 
 //Potensi Route
 Route::get('admin/potensi', 'PotentialController@index');
-Route::get('admin/potensi/tambah', 'PotentialController@create');
+Route::get('admin/potensi-tambah', 'PotentialController@create');
+Route::post('admin/potensi-simpan', 'PotentialController@store');
