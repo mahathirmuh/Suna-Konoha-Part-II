@@ -62,15 +62,14 @@ class PotentialController extends Controller
         }
 
         Image::make($photo)
-          ->resize(1000, 400, function($constraints){
-            $constraints->aspectRatio();
-          })
+          ->resize(500, 500)
           ->save($this->photos_path . '/' . $resize_name);
 
 
         $potential = new Potential;
         $potential->title = $request->title;
         $potential->description = $request->description;
+        $potential->picture_title = "Gambar " . $request->title;
         $potential->thumbnail = $resize_name;
         $potential->save();
 
@@ -119,8 +118,24 @@ class PotentialController extends Controller
      * @param  \App\Potential  $potential
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Potential $potential)
+    public function destroy($id)
     {
-        //
+      $potential = Potential::where('id', $id)->first();
+
+      if(empty($potential)){
+        return Response::json(['message' => 'Maaf file tidak ada!']);
+      }
+
+      $gambar = $this->photos_path . '/' . $potential->thumbnail;
+
+      if(file_exists($gambar)){
+        unlink($gambar);
+      }
+
+      if(!empty($potential)){
+        $potential->delete();
+      }
+
+      return redirect('admin/potensi');
     }
 }

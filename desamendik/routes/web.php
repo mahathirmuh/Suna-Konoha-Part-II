@@ -31,3 +31,4 @@ Route::get('/admin', function(){
 Route::get('admin/potensi', 'PotentialController@index');
 Route::get('admin/potensi-tambah', 'PotentialController@create');
 Route::post('admin/potensi-simpan', 'PotentialController@store');
+Route::get('admin/potensi-hapus/{id}', 'PotentialController@destroy');
