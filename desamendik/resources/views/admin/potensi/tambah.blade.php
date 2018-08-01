@@ -32,9 +32,9 @@
                   <br>
                   <br>
                   <div class="form-group">
-                    <label class="col-sm-2">Test</label>
+                    <label class="col-sm-2">Isi Artikel</label>
                     <div class="col-sm-9">
-                      <textarea name="description" rows="8" cols="30" class="form-control"></textarea>
+                      <textarea name="description" rows="20" cols="30" class="form-control" placeholder="Masukkan Isi Artikel...."></textarea>
                     </div>
 
                   </div>

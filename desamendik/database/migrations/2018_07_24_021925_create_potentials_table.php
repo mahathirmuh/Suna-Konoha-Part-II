@@ -17,7 +17,7 @@ class CreatePotentialsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('description');
-            $table->string('thumbnail');
+            $table->text('thumbnail');
             $table->timestamps();
         });
     }

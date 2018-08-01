@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Potential;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use Intervention\Image\Facades\Image;
 
 class PotentialController extends Controller
 {
@@ -12,6 +14,13 @@ class PotentialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     private $photos_path;
+
+     public function __construct(){
+       $this->photos_path = public_path('/images-potensi');
+     }
+
     public function index()
     {
         $potential = Potential::all();
@@ -36,13 +45,38 @@ class PotentialController extends Controller
      */
     public function store(Request $request)
     {
-        $potensi = new Potential;
-        $potensi->title = "test";
-        $potensi->description = "test";
-        $potensi->thumbnail = "test";
-        $potensi->save();
+        $photos = $request->file('file');
 
-        return redirect('admin/potensi');
+        if(!is_array($photos)){
+          $photos = [$photos];
+        }
+
+        if(!is_dir($this->photos_path)){
+          mkdir($this->photos_path, 0777);
+        }
+
+        for($i = 0; $i < count($photos); $i++){
+          $photo = $photos[$i];
+          $name = sha1(date('YmdHis') . str_random(30));
+          $resize_name = $name . str_random(2) . '.' . $photo->getClientOriginalExtension();
+        }
+
+        Image::make($photo)
+          ->resize(1000, 400, function($constraints){
+            $constraints->aspectRatio();
+          })
+          ->save($this->photos_path . '/' . $resize_name);
+
+
+        $potential = new Potential;
+        $potential->title = $request->title;
+        $potential->description = $request->description;
+        $potential->thumbnail = $resize_name;
+        $potential->save();
+
+        return Response::json([
+          'message' => 'Image saved Succesfully'
+        ], 200);
     }
 
     /**

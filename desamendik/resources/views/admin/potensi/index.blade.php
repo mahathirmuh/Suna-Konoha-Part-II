@@ -20,7 +20,6 @@
         </tr>
         </thead>
         <tbody>
-          <tr class="odd"><td valign="top" colspan="5" class="dataTables_empty" style="text-align: center;">Belum ada data yang tersedia, Silahkan Masukkan Data!</td></tr>
           <?php
             $x=1;
           ?>
@@ -29,7 +28,7 @@
             <td class="text-center"><?php echo $x; ?></td>
             <td>{{$Potential->title}}</td>
             <td>{{$Potential->description}}</td>
-            <td>{{$Potential->thumbnail}}</td>
+            <td><img src="/images-potensi/{{ $Potential->thumbnail }}"></td>
             <td class="text-center">
               <a href="#" class="btn btn-success btn-xs"> <i class="fa fa-eye"></i> </a>
               <a href="" class="btn btn-warning btn-xs"> <i class="fa fa-pencil"></i> </a>
