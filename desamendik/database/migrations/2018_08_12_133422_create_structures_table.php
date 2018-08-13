@@ -18,7 +18,6 @@ class CreateStructuresTable extends Migration
             $table->string('nama');
             $table->string('jabatan');
             $table->text('photo');
-            $table->integer('level');
             $table->string('picture_title');
             $table->timestamps();
         });
