@@ -2,6 +2,31 @@
 @section('content')
 
 
+<?php
+
+  function tgl_indo($tanggal){
+    $bulan = array (
+      1 =>
+        'Januari',
+        'Februari',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+         'November',
+        'Desember'
+    );
+
+    $pecahkan = explode('-', $tanggal);
+
+    return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+  }
+
+?>
+
 <!-- Main content -->
   <div class="box" style="border-top: 3px solid #3c8dbc">
     <div class="box-header" style="color: white; background: #3c8dbc">
@@ -13,10 +38,10 @@
         <thead>
         <tr>
           <th class="text-center">No.</th>
-          <th class="text-center col-xs-2">Judul</th>
-          <th class="text-center col-xs-4">Deskripsi</th>
-          <th class="text-center col-xs-2">Nama Gambar</th>
+          <th class="text-center col-xs-2">Judul Artikel</th>
+          <th class="text-center col-xs-4">Isi Artikel</th>
           <th class="text-center col-xs-2">Gambar Artikel</th>
+          <th class="text-center col-xs-2">Tanggal Upload</th>
           <th class="text-center col-xs-2">Aksi</th>
         </tr>
         </thead>
@@ -29,13 +54,17 @@
             <td class="text-center"><?php echo $x; ?></td>
             <td>{{$Potential->title}}</td>
             <!-- <td>{{$Potential->description}}</td> -->
-            <td> {!! nl2br(e(str_limit($Potential->description, 50))) !!}</td>
-            <td>{{$Potential->picture_title}}</td>
+            <td> {!! nl2br(e(str_limit($Potential->description, 200))) !!}</td>
             <td class="text-center"><img src="/images-potensi/{{ $Potential->thumbnail }}" style="width: 100px; height: auto;"></td>
+            <td class="text-center col-xs-2">
+              <?php
+                echo tgl_indo($Potential->created_at->format('Y-m-d'));
+              ?> {{$Potential->created_at->format('H:1')}} WITA
+            </td>
             <td class="text-center" style="vertical-align: middle;">
-              <a href="#" class="btn btn-success btn-xs"> <i class="fa fa-eye"></i> </a>
-              <a href="" class="btn btn-warning btn-xs"> <i class="fa fa-pencil"></i> </a>
-              <a href="{{url('admin/potensi-hapus/'.$Potential->id)}}" class="btn btn-danger btn-xs"> <i class="fa fa-trash"></i> </a>
+              <a href="{{url('admin/potensi-lihat/'.$Potential->id)}}" class="btn btn-success btn-xs" data-toggle="tooltip" title="Preview Artikel"> <i class="fa fa-eye"></i> </a>
+              <a href="{{url('admin/potensi-edit/'.$Potential->id)}}" class="btn btn-warning btn-xs" data-toggle="tooltip" title="Edit Artikel"> <i class="fa fa-pencil"></i> </a>
+              <a href="{{url('admin/potensi-hapus/'.$Potential->id)}}" class="btn btn-danger btn-xs" data-toggle="tooltip" title="Hapus Artikel"> <i class="fa fa-trash"></i> </a>
             </td>
             <?php $x++; ?>
           </tr>

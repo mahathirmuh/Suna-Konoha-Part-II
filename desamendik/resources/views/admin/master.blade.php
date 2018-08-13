@@ -87,7 +87,7 @@ desired effect
               <!-- The user image in the navbar-->
               <img src="{{asset('img/images.jpg')}}" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Admin</span>
+              <span class="hidden-xs">{{Auth::user()->name}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
@@ -95,23 +95,24 @@ desired effect
                 <img src="{{asset('img/images.jpg')}}" class="img-circle" alt="User Image">
 
                 <p style="margin-top: 20px;">
-                  Admin
+                  {{Auth::user()->name}}
                 </p>
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
-                </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
               </li>
             </ul>
           </li>
           <!-- Control Sidebar Toggle Button -->
           <li>
-            <a href="{{url('/admin')}}"><i class="fa fa-gears"></i></a>
+            <a href="{{ route('logout') }}" onClick="event.preventDefault();
+                     document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i></a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+            </form>
           </li>
         </ul>
       </div>
@@ -129,7 +130,7 @@ desired effect
           <img src="{{asset('img/images.jpg')}}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Admin</p>
+          <p>{{Auth::user()->name}}</p>
           <!-- Status -->
           <i class="fa fa-circle text-success"></i> Online
         </div>
@@ -141,7 +142,10 @@ desired effect
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Menu Administrasi</li>
         <!-- Optionally, you can add icons to the links -->
+        <li> <a href="{{url('admin')}}"> <i class="fa fa-home"></i>  <span> Beranda</span> </a> </li>
         <li><a href="{{url('/admin/potensi')}}"><i class="fa fa-tree"></i> <span>Potensi Desa</span></a></li>
+        <li> <a href="{{url('admin/kegiatan-desa')}}"> <i class="fa fa-tasks"></i> <span>Kegiatan Desa</span> </a> </li>
+        <li> <a href="{{url('admin/struktur-organisasi')}}"> <i class="fa fa-user"></i> <span>Struktur Organisasi Desa</span> </a> </li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

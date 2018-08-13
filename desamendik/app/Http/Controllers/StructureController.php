@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Potential;
+use App\Structure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Intervention\Image\Facades\Image;
 
-class PotentialController extends Controller
+class StructureController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,16 +15,16 @@ class PotentialController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     private $photos_path;
+    private $photos_path;
 
-     public function __construct(){
-       $this->photos_path = public_path('/images-potensi');
-     }
+    public function __construct(){
+      $this->photos_path = public_path('images-struktur');
+    }
 
     public function index()
     {
-        $potential = Potential::latest()->get();
-        return view('admin.potensi.index', compact('potential'));
+        $structures = Structure::all();
+        return view('admin.struktur-organisasi.index', compact('structures'));
     }
 
     /**
@@ -34,7 +34,7 @@ class PotentialController extends Controller
      */
     public function create()
     {
-        return view('admin.potensi.tambah');
+      return view('admin.struktur-organisasi.tambah');
     }
 
     /**
@@ -45,7 +45,8 @@ class PotentialController extends Controller
      */
     public function store(Request $request)
     {
-        $photos = $request->file('thumbnail');
+
+        $photos = $request->file('photo');
         if(!is_array($photos)){
           $photos = [$photos];
         }
@@ -61,66 +62,65 @@ class PotentialController extends Controller
         }
 
         Image::make($photo)
-          ->resize(1000, 380)
+          ->resize(300, 400)
           ->save($this->photos_path . '/' . $new_name);
 
+        $structure = new Structure;
+        $structure->nama = $request->nama;
+        $structure->jabatan = $request->jabatan;
+        $structure->photo = $new_name;
+        $structure->picture_title = "Foto " . $request->jabatan . $request->nama;
+        $structure->save();
 
-        $potential = new Potential;
-        $potential->title = $request->title;
-        $potential->description = $request->description;
-        $potential->picture_title = "Gambar " . $request->title;
-        $potential->thumbnail = $new_name;
-        $potential->save();
-
-        return redirect('admin/potensi');
+        return redirect('/admin/struktur-organisasi');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Potential  $potential
+     * @param  \App\Structure  $structure
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Structure $structure)
     {
-        $potential = Potential::find($id);
-        return view('admin.potensi.show', compact('potential'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Potential  $potential
+     * @param  \App\Structure  $structure
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $potential = Potential::where('id', $id)->first();
-        return view('admin.potensi.edit', compact('potential'));
+        $structure = Structure::find($id);
+        return view('admin.struktur-organisasi.edit', compact('structure'));
     }
-
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Potential  $potential
+     * @param  \App\Structure  $structure
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $potential = Potential::find($id);
-        $photos = $request->file('thumbnail');
+        $structure = Structure::find($id);
+
+        $photos = $request->file('photo');
+
         if(!empty($photos)){
-          $gambar = $this->photos_path . '/' . $potential->thumbnail;
+          $gambar = $this->photos_path . '/' . $structure->photo;
 
           if(file_exists($gambar)){
             unlink($gambar);
           }
+
           if(!is_array($photos)){
             $photos = [$photos];
           }
-
 
           for($i = 0; $i < count($photos); $i++){
             $photo = $photos[$i];
@@ -129,45 +129,43 @@ class PotentialController extends Controller
           }
 
           Image::make($photo)
-            ->resize(1000, 380)
+            ->resize(300,400)
             ->save($this->photos_path . '/' . $new_name);
-          $potential->thumbnail = $new_name;
+          $structure->photo = $new_name;
         }
 
-        $potential->title = $request->title;
-        $potential->description = $request->description;
-        $potential->picture_title = "Gambar " . $request->title;
-        $potential->save();
+        $structure->nama = $request->nama;
+        $structure->jabatan = $request->jabatan;
+        $structure->picture_title = "Foto " . $request->jabatan . $request->nama;
+        $structure->save();
 
-        return redirect("admin/potensi");
-
-
+        return redirect('admin/struktur-organisasi');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Potential  $potential
+     * @param  \App\Structure  $structure
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-      $potential = Potential::where('id', $id)->first();
+        $structure = Structure::find($id);
 
-      if(empty($potential)){
-        return Response::json(['message' => 'Maaf file tidak ada!']);
-      }
+        if(empty($structure)){
+          return Response::json(['message'  => 'Maaf file tidak ada']);
+        }
 
-      $gambar = $this->photos_path . '/' . $potential->thumbnail;
+        $gambar = $this->photos_path . '/' . $structure->photo;
 
-      if(file_exists($gambar)){
-        unlink($gambar);
-      }
+        if(file_exists($gambar)){
+          unlink($gambar);
+        }
 
-      if(!empty($potential)){
-        $potential->delete();
-      }
+        if(!empty($structure)){
+          $structure->delete();
+        }
 
-      return redirect('admin/potensi');
+        return redirect('admin/struktur-organisasi');
     }
 }

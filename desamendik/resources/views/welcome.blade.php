@@ -1,95 +1,90 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-        <title>Laravel</title>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Admin DesaMendik | Masuk</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="{{asset('admincss/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{asset('admincss/bower_components/font-awesome/css/font-awesome.min.css')}}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="{{asset('admincss/bower_components/Ionicons/css/ionicons.min.css')}}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{asset('admincss/dist/css/AdminLTE.min.css')}}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{{asset('admincss/plugins/iCheck/square/blue.css')}}">
+  <link rel="icon" href="{{asset('img/favicon-16x16.png')}}">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box" style="background: #367fa9;">
+  <div class="login-logo">
+    <img src="{{asset('img/daya-taka-colour_burned.png')}}" alt="logo-paser" style="width: 20%; height: auto; margin-top: 15px;"><p style="color: white;"><b>Admin</b> DesaMendik</p>
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">Silahkan Masuk terlebih dahulu!</p>
 
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel <i class="glyphicon glyphicon-envelope"></i>
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
+    <form class="form-horizontal" method="POST" action="{{ route('login') }}">
+        {{ csrf_field() }}
+      <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }} has-feedback">
+              <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" placeholder="Username" required>
+              <span class="fa fa-user form-control-feedback"></span>
+              @if ($errors->has('username'))
+                  <span class="help-block">
+                      <strong>{{ $errors->first('username') }}</strong>
+                  </span>
+              @endif
+      </div>
+      <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }} has-feedback">
+              <input id="password" type="password" class="form-control" name="password" value="{{ old('password') }}" placeholder="Password" required>
+              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+              @if ($errors->has('password'))
+                  <span class="help-block">
+                      <strong>{{ $errors->first('password') }}</strong>
+                  </span>
+              @endif
+      </div>
+      <div class="row">
+        <!-- /.col -->
+        <div class="col-xs-4 col-xs-push-8">
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Masuk</button>
         </div>
-    </body>
+        <!-- /.col -->
+      </div>
+    </form>
+    <!-- /.social-auth-links -->
+  </div>
+  <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery 3 -->
+<script src="{{asset('admincss/bower_components/jquery/dist/jquery.min.js')}}"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="{{asset('admincss/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+<!-- iCheck -->
+<script src="{{asset('admincss/plugins/iCheck/icheck.min.js')}}"></script>
+<script>
+  $(function () {
+    $('input').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' /* optional */
+    });
+  });
+</script>
+</body>
 </html>

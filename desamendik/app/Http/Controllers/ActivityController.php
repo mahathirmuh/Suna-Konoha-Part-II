@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Potential;
+use App\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Intervention\Image\Facades\Image;
 
-class PotentialController extends Controller
+class ActivityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,13 +18,13 @@ class PotentialController extends Controller
      private $photos_path;
 
      public function __construct(){
-       $this->photos_path = public_path('/images-potensi');
+       $this->photos_path = public_path('/images-kegiatan-desa');
      }
 
     public function index()
     {
-        $potential = Potential::latest()->get();
-        return view('admin.potensi.index', compact('potential'));
+        $activity = Activity::latest()->get();
+        return view('admin.kegiatan-desa.index', compact('activity'));
     }
 
     /**
@@ -34,7 +34,7 @@ class PotentialController extends Controller
      */
     public function create()
     {
-        return view('admin.potensi.tambah');
+        return view('admin.kegiatan-desa.tambah');
     }
 
     /**
@@ -46,6 +46,7 @@ class PotentialController extends Controller
     public function store(Request $request)
     {
         $photos = $request->file('thumbnail');
+
         if(!is_array($photos)){
           $photos = [$photos];
         }
@@ -64,63 +65,62 @@ class PotentialController extends Controller
           ->resize(1000, 380)
           ->save($this->photos_path . '/' . $new_name);
 
+        $activity = new Activity;
+        $activity->title = $request->title;
+        $activity->description = $request->description;
+        $activity->picture_title = "Gambar " . $request->title;
+        $activity->thumbnail = $new_name;
+        $activity->save();
 
-        $potential = new Potential;
-        $potential->title = $request->title;
-        $potential->description = $request->description;
-        $potential->picture_title = "Gambar " . $request->title;
-        $potential->thumbnail = $new_name;
-        $potential->save();
-
-        return redirect('admin/potensi');
+        return redirect('admin/kegiatan-desa');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Potential  $potential
+     * @param  \App\Activity  $activity
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $potential = Potential::find($id);
-        return view('admin.potensi.show', compact('potential'));
+        $activity = Activity::find($id);
+        return view('admin.kegiatan-desa.show', compact('activity'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Potential  $potential
+     * @param  \App\Activity  $activity
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $potential = Potential::where('id', $id)->first();
-        return view('admin.potensi.edit', compact('potential'));
+        $activity = Activity::find($id);
+        return view('admin.kegiatan-desa.edit', compact('activity'));
     }
-
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Potential  $potential
+     * @param  \App\Activity  $activity
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $potential = Potential::find($id);
+        $activity = Activity::find($id);
         $photos = $request->file('thumbnail');
-        if(!empty($photos)){
-          $gambar = $this->photos_path . '/' . $potential->thumbnail;
 
+        if(!empty($photos)){
+
+          $gambar = $this->photos_path . '/' . $activity->thumbnail;
           if(file_exists($gambar)){
             unlink($gambar);
           }
+
           if(!is_array($photos)){
             $photos = [$photos];
           }
-
 
           for($i = 0; $i < count($photos); $i++){
             $photo = $photos[$i];
@@ -129,45 +129,44 @@ class PotentialController extends Controller
           }
 
           Image::make($photo)
-            ->resize(1000, 380)
+            ->resize(1000,380)
             ->save($this->photos_path . '/' . $new_name);
-          $potential->thumbnail = $new_name;
+
+          $activity->thumbnail = $new_name;
         }
 
-        $potential->title = $request->title;
-        $potential->description = $request->description;
-        $potential->picture_title = "Gambar " . $request->title;
-        $potential->save();
+        $activity->title = $request->title;
+        $activity->description = $request->description;
+        $activity->picture_title = "Gambar " . $request->title;
+        $activity->save();
 
-        return redirect("admin/potensi");
-
-
+        return redirect("admin/kegiatan-desa");
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Potential  $potential
+     * @param  \App\Activity  $activity
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-      $potential = Potential::where('id', $id)->first();
+        $activity = Activity::find($id);
 
-      if(empty($potential)){
-        return Response::json(['message' => 'Maaf file tidak ada!']);
-      }
+        if(empty($activity)){
+            return Response::json(['message' => 'Maaf file tidak ada!']);
+        }
 
-      $gambar = $this->photos_path . '/' . $potential->thumbnail;
+        $gambar = $this->photos_path . '/' . $activity->thumbnail;
 
-      if(file_exists($gambar)){
-        unlink($gambar);
-      }
+        if(file_exists($gambar)){
+          unlink($gambar);
+        }
 
-      if(!empty($potential)){
-        $potential->delete();
-      }
+        if(!empty($activity)){
+          $activity->delete();
+        }
 
-      return redirect('admin/potensi');
+        return redirect('admin/kegiatan-desa');
     }
 }
