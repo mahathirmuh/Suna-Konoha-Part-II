@@ -28,9 +28,6 @@
               <a href="http://www.unmul.ac.id/"><img src="{{ asset('img/Logo-Unmul-2.png') }}" alt="logo_unmul" id="logo_unmul"></a>
             </div>
           </div>
-
-
-
         </div>
         <!-- End of Header -->
         <div class="navigation">

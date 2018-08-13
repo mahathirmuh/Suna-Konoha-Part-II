@@ -1,6 +1,32 @@
 @extends('master')
 @section('content')
 
+<?php
+function tgl_indo($tanggal){
+  $bulan = array (
+    1 =>   'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember'
+  );
+  $pecahkan = explode('-', $tanggal);
+
+  // variabel pecahkan 0 = tanggal
+  // variabel pecahkan 1 = bulan
+  // variabel pecahkan 2 = tahun
+
+  return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+}
+?>
+
   <div class="container">
       <div class="col-lg-push-3 col-md-6 col-xs-12 col-xs-12">
         <div class="box">
@@ -127,25 +153,24 @@
         <div class="container" style="width: 110%;">
           <div class="box">
             <div class="box-header">
-              <h4>Potensi Desa</h4>
+              <h4>Kegiatan Desa Terbaru</h4>
             </div>
             <div class="box-body">
               <div class="kegiatan-desa">
                 <div class="row">
+                  @foreach($activities as $Activity)
                   <div class="container">
-                    <a href="#">
-                        <img src="{{ asset('img/thumb-1920-411820.jpg') }}" class="thumbnail">
-                        <p class="title">Desa Mendik melakukan kegiatan Gotong Royong</p>
-                        <p class="upload-time">Selasa, 03 Juli 2018 16.36 WITA</p>
+                    <a href="{{url('kegiatan-desa/'.$Activity->id)}}">
+                        <img src="{{ asset('images-kegiatan-desa/'.$Activity->thumbnail) }}" class="thumbnail">
+                        <p class="title">{{$Activity->title}}</p>
+                        <p class="upload-time">
+                          <?php
+                            echo tgl_indo($Activity->created_at->format('Y-m-d'));
+                          ?> {{$Activity->created_at->format('H:i')}} WITA
+                        </p>
                     </a>
                   </div>
-                  <div class="container">
-                    <a href="#">
-                        <img src="{{ asset('img/thumb-1920-411820.jpg') }}" class="thumbnail">
-                        <p class="title">Desa Mendik Melakukan Perbaikan Jalan</p>
-                        <p class="upload-time">Selasa, 03 Juli 2018 16.36 WITA</p>
-                    </a>
-                  </div>
+                  @endforeach
                 </div>
               </div>
             </div>
@@ -157,80 +182,25 @@
         <div class="container" style="width: 110%; margin-left: -30px; ">
           <div class="box">
             <div class="box-header">
-              <h4>Kegiatan Desa Terbaru</h4>
+              <h4>Potensi Desa</h4>
             </div>
             <div class="box-body">
               <div class="kegiatan-desa">
                 <div class="row">
+                  @foreach($potentials as $Potential)
                   <div class="container">
-                    <a href="#">
-                        <img src="{{ asset('img/thumb-1920-411820.jpg') }}" class="thumbnail">
-                        <p class="title">Desa Mendik melakukan kegiatan Gotong Royong</p>
-                        <p class="upload-time">Selasa, 03 Juli 2018 16.36 WITA</p>
+                    <a href="{{url('potensi-desa/'.$Potential->id)}}">
+                        <img src="{{ asset('images-potensi/'.$Potential->thumbnail) }}" class="thumbnail">
+                        <p class="title">{{$Potential->title}}</p>
+                        <p class="upload-time">
+                          <?php
+                            echo tgl_indo($Activity->created_at->format('Y-m-d'));
+                          ?> {{$Activity->created_at->format('H:i')}} WITA
+                        </p>
                     </a>
                   </div>
-                  <div class="container">
-                    <a href="#">
-                        <img src="{{ asset('img/thumb-1920-411820.jpg') }}" class="thumbnail">
-                        <p class="title">Desa Mendik Melakukan Perbaikan Jalan</p>
-                        <p class="upload-time">Selasa, 03 Juli 2018 16.36 WITA</p>
-                    </a>
-                  </div>
-                  <div class="container">
-                    <a href="#">
-                        <img src="{{ asset('img/thumb-1920-411820.jpg') }}" class="thumbnail">
-                        <p class="title">Desa Mendik melakukan kegiatan Gotong Royong</p>
-                        <p class="upload-time">Selasa, 03 Juli 2018 16.36 WITA</p>
-                    </a>
-                  </div>
-                  <div class="container">
-                    <a href="#">
-                        <img src="{{ asset('img/thumb-1920-411820.jpg') }}" class="thumbnail">
-                        <p class="title">Desa Mendik Melakukan Perbaikan Jalan</p>
-                        <p class="upload-time">Selasa, 03 Juli 2018 16.36 WITA</p>
-                    </a>
-                  </div><div class="container">
-                    <a href="#">
-                        <img src="{{ asset('img/thumb-1920-411820.jpg') }}" class="thumbnail">
-                        <p class="title">Desa Mendik melakukan kegiatan Gotong Royong</p>
-                        <p class="upload-time">Selasa, 03 Juli 2018 16.36 WITA</p>
-                    </a>
-                  </div>
-                  <div class="container">
-                    <a href="#">
-                        <img src="{{ asset('img/thumb-1920-411820.jpg') }}" class="thumbnail">
-                        <p class="title">Desa Mendik Melakukan Perbaikan Jalan</p>
-                        <p class="upload-time">Selasa, 03 Juli 2018 16.36 WITA</p>
-                    </a>
-                  </div><div class="container">
-                    <a href="#">
-                        <img src="{{ asset('img/thumb-1920-411820.jpg') }}" class="thumbnail">
-                        <p class="title">Desa Mendik melakukan kegiatan Gotong Royong</p>
-                        <p class="upload-time">Selasa, 03 Juli 2018 16.36 WITA</p>
-                    </a>
-                  </div>
-                  <div class="container">
-                    <a href="#">
-                        <img src="{{ asset('img/thumb-1920-411820.jpg') }}" class="thumbnail">
-                        <p class="title">Desa Mendik Melakukan Perbaikan Jalan</p>
-                        <p class="upload-time">Selasa, 03 Juli 2018 16.36 WITA</p>
-                    </a>
-                  </div><div class="container">
-                    <a href="#">
-                        <img src="{{ asset('img/thumb-1920-411820.jpg') }}" class="thumbnail">
-                        <p class="title">Desa Mendik melakukan kegiatan Gotong Royong</p>
-                        <p class="upload-time">Selasa, 03 Juli 2018 16.36 WITA</p>
-                    </a>
-                  </div>
-                  <div class="container">
-                    <a href="#">
-                        <img src="{{ asset('img/thumb-1920-411820.jpg') }}" class="thumbnail">
-                        <p class="title">Desa Mendik Melakukan Perbaikan Jalan</p>
-                        <p class="upload-time">Selasa, 03 Juli 2018 16.36 WITA</p>
-                    </a>
-                  </div>
+                  @endforeach
                 </div>
-
               </div>
             </div>
           </div>

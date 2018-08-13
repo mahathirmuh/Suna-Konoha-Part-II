@@ -1,6 +1,31 @@
 @extends('master')
 @section('content')
 
+<?php
+function tgl_indo($tanggal){
+  $bulan = array (
+    1 =>   'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember'
+  );
+  $pecahkan = explode('-', $tanggal);
+
+  // variabel pecahkan 0 = tanggal
+  // variabel pecahkan 1 = bulan
+  // variabel pecahkan 2 = tahun
+
+  return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+}
+?>
 
   <div class="container" style="width: 90%;">
     <div class="kegiatan">
@@ -13,33 +38,28 @@
         <div class="box-body">
           <div class="kd-lain">
             <div class="row">
+              @foreach($activities as $Activity)
               <div class="container">
-                  <a href="#">
+                  <a href="{{url('kegiatan-desa/'.$Activity->id)}}">
                     <div>
-                      <img src="{{ asset('img/thumb-1920-411820.jpg') }}" class="thumbnail">
+                      <img src="{{ asset('images-kegiatan-desa/'.$Activity->thumbnail) }}" class="thumbnail">
                     </div>
                     <div>
-                      <h3 class="title">Desa Mendik melakukan perbaikan jalan</h3>
-                      <p class="upload-time">Selasa, 03 Juli 2018 17.40 WITA</p>
-                      <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ini hanya taks tambahan, ini juga masih teks tambahan, yang ini juga
+                      <h3 class="title">{{$Activity->title}}</h3>
+                      <p class="upload-time">
+                        <?php
+                          echo tgl_indo($Activity->created_at->format('Y-m-d'));
+                        ?> {{$Activity->created_at->format('H:i')}} WITA
+                      </p>
+                      <p class="description">
+                        {!! nl2br(e(str_limit($Activity->description,700))) !!}
                       </p>
                     </div>
                   </a>
                 </div>
-                <div class="container">
-                  <a href="#">
-                    <div>
-                      <img src="{{ asset('img/thumb-1920-411820.jpg') }}" class="thumbnail">
-                    </div>
-                    <div>
-                      <h3 class="title">Desa Mendik melakukan gotong royong membersihkan selokan</h3>
-                      <p class="upload-time">Selasa, 03 Juli 2018 17.40 WITA</p>
-                      <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    </div>
-                  </a>
-                </div>
+                @endforeach
               </div>
+              {{$activities->links()}}
             </div>
           </div>
         </div>

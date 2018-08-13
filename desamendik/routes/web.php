@@ -20,7 +20,8 @@ Route::get('/welcome', function () {
 Route::get('/', 'PengunjungController@index');
 Route::get('/kegiatan-desa', 'PengunjungController@kegiatan');
 Route::get('/struktur-organisasi', 'PengunjungController@struktur');
-
+Route::get('/kegiatan-desa/{id}', 'PengunjungController@artikelkegiatan');
+Route::get('/potensi-desa/{id}', 'PengunjungController@artikelpotensi');
 Auth::routes();
 Route::group(['middleware' => ['web', 'auth']], function(){
   //Route for Admin
